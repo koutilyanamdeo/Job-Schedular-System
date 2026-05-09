@@ -33,7 +33,7 @@ const registration = async (req: Request, res: Response) => {
 
        
         const hashedPassword = await bcrypt.hash(password, saltRounds);
-        let data =  {
+        const data =  {
                 name,
                 email,
                 password:hashedPassword,           

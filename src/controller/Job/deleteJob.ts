@@ -14,7 +14,7 @@ const deleteJob = async (req: Request, res: Response) => {
         }
         
         const response = await JobService.deleteJob(`${id}`);
-        return res.status(200).json({ success: true, message: "Job deleted successfully" , res:response});
+        return res.status(200).json({ success: true, message: "Job deleted successfully" , deleteResult :response});
     }
     catch (error) {
         console.error("Error deleting job:", error);

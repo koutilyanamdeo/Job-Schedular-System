@@ -24,9 +24,19 @@ const createJob = async (req: Request, res: Response) => {
     try {
         const { type, frequencyType, payload, nextRunTime } = req.body;
         const userId = (req as any).user.id;
+        if(!payload || typeof payload !== 'object') {
+            return res.status(400).json({ success: false, message: "Invalid payload format" });
+        }
+        if(frequencyType && !['once', 'daily', 'weekly', 'monthly', 'yearly'].includes(frequencyType.toLowerCase())) {
+            return res.status(400).json({ success: false, message: "Invalid frequencyType" });
+        }
+        if(nextRunTime && isNaN(Date.parse(nextRunTime))) {
+            return res.status(400).json({ success: false, message: "Invalid nextRunTime format" });
+        }   
+
          
         const scheduledTime = nextRunTime ? new Date(nextRunTime) : new Date();
-        let cronString = frequencyType !== 'once' ? getDynamicCron(scheduledTime, frequencyType) : null;
+        let cronString = frequencyType && frequencyType !== 'once' ? getDynamicCron(scheduledTime, frequencyType) : null;
 
         const newJob = await JobService.createJob({
             type,
