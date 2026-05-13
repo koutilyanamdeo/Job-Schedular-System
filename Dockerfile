@@ -10,7 +10,12 @@ RUN npm ci
 COPY . .
 
 # Generate Prisma client types (needed before TypeScript build)
+# Prisma needs DATABASE_URL env var available at build time.
+# Railway can inject env vars during build; if not present, set a placeholder.
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
 RUN npx prisma generate
+
 
 # Build TypeScript
 RUN npm run build
