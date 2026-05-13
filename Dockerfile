@@ -9,8 +9,12 @@ RUN npm ci
 # Copy source
 COPY . .
 
+# Generate Prisma client types (needed before TypeScript build)
+RUN npx prisma generate
+
 # Build TypeScript
 RUN npm run build
+
 
 # ---- runtime stage ----
 FROM node:20-alpine AS runtime
