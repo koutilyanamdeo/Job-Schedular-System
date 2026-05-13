@@ -21,10 +21,14 @@ RUN npx prisma generate
 # Build TypeScript
 RUN npm run build
 
+# Debug: verify dist output exists during build
+RUN ls -la /app && ls -la /app/dist || (echo "dist not generated" && exit 1)
+
 
 # ---- runtime stage ----
 FROM node:20-alpine AS runtime
 WORKDIR /app
+
 
 # Install only production deps
 COPY package*.json ./
