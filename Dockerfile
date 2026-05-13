@@ -30,8 +30,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev
 
-# Copy compiled output
+# Copy compiled output (TypeScript output)
+# Railway previously failed because /app/dist wasn't present; ensure build emits it.
 COPY --from=build /app/dist ./dist
+
 
 # Environment variables should be provided at runtime
 ENV NODE_ENV=production
