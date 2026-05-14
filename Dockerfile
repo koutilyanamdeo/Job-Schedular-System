@@ -43,7 +43,8 @@ COPY --from=build /app/dist ./dist
 ENV NODE_ENV=production
 
 # Start the API
-# TypeScript build emits entrypoint at dist/src/index.ts, so we run that directly.
-CMD ["node", "dist/src/index.ts"]
+# TypeScript build emits compiled JS into dist/src/*.js
+CMD ["node", "dist/src/index.js"]
+
 
 
