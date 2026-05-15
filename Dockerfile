@@ -38,6 +38,10 @@ RUN npm ci --omit=dev
 # Railway previously failed because /app/dist wasn't present; ensure build emits it.
 COPY --from=build /app/dist ./dist
 
+# Prisma client is generated during the build stage. The runtime install omits
+# dev dependencies, so copy the generated client artifacts into production.
+COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
+
 
 # Environment variables should be provided at runtime
 ENV NODE_ENV=production
@@ -45,6 +49,5 @@ ENV NODE_ENV=production
 # Start the API
 # TypeScript build emits compiled JS into dist/src/*.js
 CMD ["node", "dist/src/index.js"]
-
 
 
