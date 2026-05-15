@@ -7,7 +7,8 @@ import jobRoutes from './routes/JobRoutes/jobRoutes.ts';
 dotenv.config();
 
 const app: Application = express();
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT) || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -19,9 +20,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'Job Scheduler with Kafka - Ready for millions users!' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`🚀 Server running on http://${HOST}:${PORT}`);
   console.log('📧 Run `npm run consumer` in new terminal for job processing');
   console.log('🐳 Kafka: docker compose -f docker-compose-kafka.yml up -d');
 });
-
