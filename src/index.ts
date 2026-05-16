@@ -7,7 +7,7 @@ import jobRoutes from './routes/JobRoutes/jobRoutes.ts';
 dotenv.config();
 
 const app: Application = express();
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number(process.env.PORT) || 8080;
 const HOST = process.env.HOST || '0.0.0.0';
 
 app.use(express.json({ limit: '10mb' }));

@@ -45,9 +45,10 @@ COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 
 # Environment variables should be provided at runtime
 ENV NODE_ENV=production
+ENV PORT=8080
+EXPOSE 8080
 
 # Start the API
 # TypeScript build emits compiled JS into dist/src/*.js
 CMD ["node", "dist/src/index.js"]
-
 
