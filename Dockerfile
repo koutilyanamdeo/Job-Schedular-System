@@ -50,5 +50,4 @@ EXPOSE 8080
 
 # Start the API
 # TypeScript build emits compiled JS into dist/src/*.js
-CMD ["node", "dist/src/index.js"]
-
+CMD ["sh", "-c", "PORT=8080 node dist/src/index.js"]
