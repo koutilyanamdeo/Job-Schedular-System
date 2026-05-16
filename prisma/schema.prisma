@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Frequency {
+  ONCE
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+  CUSTOM
+}
+
+// This is your user table
+model User {
+  id          String   @id @default(uuid()) // Generates a UUID like '550e8400-e29b...'
+  name        String
+  email       String   @unique
+  password    String   // You will store the Hashed password here
+  phoneNumber String?  // Optional field
+  createdAt   DateTime @default(now())
+  
+  // Relationship: A user can own many jobs
+  jobs        Job[]
+}
+
+// Your updated Job table
+model Job {
+  id              Int       @id @default(autoincrement())
+  type            String    
+  frequencyType   Frequency @default(ONCE)
+  cronExpression  String?   
+  nextRunTime     DateTime
+  status          String    @default("PENDING")
+  payload         Json
+  
+  // Foreign Key: Links the job to a specific user
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
