@@ -1,4 +1,5 @@
 # Job Scheduler System (Project-10)
+### NOTE: The code has been Deployed in Digital Ocean By Creating a Droplet in ubuntu You can access Api using this hosting url http://142.93.119.62/
 
 ## Summary
 This project is a Node.js + TypeScript + Express API that lets users create scheduled **jobs** (primarily email notifications). Jobs are stored in **MySQL** using **Prisma**, and (to support millions of users) job execution is handled asynchronously via **Kafka**.
